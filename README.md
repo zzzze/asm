@@ -87,3 +87,21 @@ bochs -qf /dev/null 'ata0-master: type=disk, path="start.vhd", mode=flat, cylind
 8. sbb 带借位减法（subtraction with borrow）
 
     `sbb reg/mem reg/mem/imm`
+
+9. mul 乘法
+
+    `mul reg/mem`
+
+    | 被乘数 | 乘数      | 乘积（高位）| 乘积（低位）|
+    | :----: | :-------: | :---------: | :---------: |
+    | al     | reg/mem8  | ah          | al          |
+    | ax     | reg/mem16 | dx          | ax          |
+
+9. div 除法
+
+    `div reg/mem` 不会影响 CF 标志位
+
+    | 被除数 | 除数      | 余数 | 商   |
+    | :----: | :-------: | :--: | :--: |
+    | ax     | reg/mem8  | ah   | al   |
+    | dx:ax  | reg/mem16 | dx   | ax   |

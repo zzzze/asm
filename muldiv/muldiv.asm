@@ -1,0 +1,37 @@
+; 8位乘法
+mov al, 0xf0
+mov ah, 0x02
+mul ah
+; 结果：0x1e0
+; al => 0xe0
+; ah => 0x01
+
+; 16位乘法
+mov ax, 0xf000
+mov bx, 0x0002
+mul bx
+; 结果：0x1e000
+; ax => 0xe000
+; dx => 0x0001
+
+; 16位除法
+mov ax, 0x0004
+mov bl, 0x02
+div bl
+; 结果：0x0002
+; ah => 0x00
+; al => 0x02
+
+; 32位除法
+mov dx, 0x0008
+mov ax, 0x0006
+mov bx, 0x0002
+div bx
+; 结果：0x00040003
+; dx => 0x0000
+; ax => 0x0003
+
+;循环及补 0
+jmp $
+times 510-($-$$) db 0
+db 0x55, 0xaa
