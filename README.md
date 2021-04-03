@@ -3,6 +3,8 @@
 ```
 // compile
 nasm -f bin -o start.bin start.asm
+或
+nasm -f bin -o start.bin start.asm -l start.lst
 
 // run in virtualbox
 VBoxManage convertfromraw --format VHD --variant Fixed start.bin start.vhd
@@ -47,6 +49,16 @@ bochs -qf /dev/null 'ata0-master: type=disk, path="start.vhd", mode=flat, cylind
     addr = 地址
 
     `xp /1bx 0x7c0f1`
+
+### 标志位
+
+| N  | Name | Desc |
+| :-: | :-: | :-: | :-: |
+| 0  | CF | 进位 |
+| 2  | PF | 偶数 |
+| 6  | ZF | 零   |
+| 7  | SF | 符号 |
+| 11 | OF | 溢出 |
 
 ### 操作符
 
@@ -105,3 +117,33 @@ bochs -qf /dev/null 'ata0-master: type=disk, path="start.vhd", mode=flat, cylind
     | :----: | :-------: | :--: | :--: |
     | ax     | reg/mem8  | ah   | al   |
     | dx:ax  | reg/mem16 | dx   | ax   |
+
+10. jz Jump if zero (ZF=1)
+
+11. jnz Jump if not zero (ZF=0)
+
+12. cmp 比较指令
+
+    `cmp dest(reg/mem) source(reg/mem/imm)`
+
+    无符号:
+    | Operands      | CF  | ZF |
+    | :-----------: | :-: | :--: |
+    | dest > source | 0  | 0   |
+    | dest = source | 0  | 1   |
+    | dest < source | 1  | 0   |
+
+    有符号:
+    | Operands      | CF      | ZF |
+    | :-----------: | :-----: | :--: |
+    | dest > source | SF      | 0   |
+    | dest = source | 0       | 1   |
+    | dest < source | NOT SF  | 0   |
+
+13. in 读出指令
+    
+    `in dest(al/ax) source(dx/imm8)`
+
+13. out 读出指令
+    
+    `out dest(dx/imm8) source(al/ax)`
